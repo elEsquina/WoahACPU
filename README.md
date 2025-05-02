@@ -3,6 +3,9 @@
 **WoahACPU** is a process scheduling simulator developed with love & care for the first assignment of the Operating Systems course.
 A detailed Report is available in `Report.pdf`
 
+The full ZIP file without the ignored extra files is available at this onedrive:
+
+
 ## Project Info
 
 * **Unity Version:** `2021.3.22f1 (LTS)`

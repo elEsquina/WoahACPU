@@ -1,0 +1,49 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/Scripts/UI/Style.uss?fileID=7433441132597879392&amp;guid=9b5f84a6da73f4740bfa0cde04359a75&amp;type=3#Style" />
+    <ui:VisualElement name="main-container" class="main-container">
+        <ui:VisualElement name="top-section" class="control-panel">
+            <ui:VisualElement class="control-group">
+                <ui:Label text="SCHEDULING ALGORITHM" class="section-label" />
+                <ui:DropdownField name="algorithm-dropdown" choices="FCFS,SJF,RR,PriorityBatch,PriorityRR" class="algorithm-dropdown" />
+            </ui:VisualElement>
+            <ui:VisualElement class="control-group">
+                <ui:Label text="INPUT TYPE" class="section-label" />
+                <ui:RadioButtonGroup name="input-type-group" class="radio-group">
+                    <ui:RadioButton name="file-toggle" label="File Input" value="file" class="radio-button" />
+                    <ui:RadioButton name="random-toggle" label="Random Input" value="random" checked="true" class="radio-button" />
+                </ui:RadioButtonGroup>
+            </ui:VisualElement>
+            <ui:Button name="start-button" text="START SIMULATION" class="start-button" />
+        </ui:VisualElement>
+        <ui:VisualElement name="bottom-section" class="stats-panel">
+            <ui:Label text="PERFORMANCE METRICS" class="section-label" />
+            <ui:VisualElement class="stats-grid">
+                <ui:Label name="time-label" text="Current Time: 0" class="stat-item" />
+                <ui:Label name="turnaround-label" text="Avg Turnaround: 0" class="stat-item" />
+                <ui:Label name="waiting-label" text="Avg Waiting: 0" class="stat-item" />
+                <ui:Label name="response-label" text="Avg Response: 0" class="stat-item" />
+                <ui:Label name="throughput-label" text="Throughput: 0" class="stat-item" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="middle-section" class="visualization-panel">
+            <ui:VisualElement name="ready-queue-container" class="queue-container">
+                <ui:Label text="READY QUEUE" class="queue-title" />
+                <ui:ScrollView name="ready-scroll" show-horizontal="false" show-vertical="true" class="queue-scroll" style="height: 374px; width: 204px;">
+                    <ui:VisualElement name="ready-content" class="queue-content" />
+                </ui:ScrollView>
+            </ui:VisualElement>
+            <ui:VisualElement name="cpu-display" class="cpu-display">
+                <ui:VisualElement class="cpu-container">
+                    <ui:Label text="CPU" class="cpu-title" />
+                    <ui:VisualElement name="current-process" class="active-process" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="finished-queue-container" class="queue-container">
+                <ui:Label text="COMPLETED" class="queue-title" />
+                <ui:ScrollView name="finished-scroll" show-horizontal="false" show-vertical="true" class="queue-scroll" style="width: 211px;">
+                    <ui:VisualElement name="finished-content" class="queue-content" />
+                </ui:ScrollView>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

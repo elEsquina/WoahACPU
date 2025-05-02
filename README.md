@@ -4,6 +4,7 @@
 A detailed Report is available in `Report.pdf`
 
 The full ZIP file without the ignored extra files is available at this onedrive:
+https://um6p-my.sharepoint.com/:u:/g/personal/othmane_azoubi_um6p_ma/EfPm7bT-CUdHnl7oEHnsHncBBQEVAjW5RJMa1EFTMitx-Q?e=ygtds2
 
 
 ## Project Info
@@ -16,7 +17,7 @@ The full ZIP file without the ignored extra files is available at this onedrive:
 
 This project is available in two formats:
 
-1. **ZIP Archive** – A complete Unity project with all necessary folders (`Assets`, `Packages`, `ProjectSettings`, etc.).
+1. **ZIP Archive** – A complete Unity project with all necessary folders (`Assets`, `Packages`, `ProjectSettings`, etc...) (View drive link).
 2. **Folder-Only Version** – Contains only the core `Assets/Scripts` and essential files for review or integration.
 
 ## Python Backend

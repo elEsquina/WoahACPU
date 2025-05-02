@@ -1,0 +1,110 @@
+@startuml
+
+' ==== Data and Models ====
+class Process {
+  +int id
+  +int arrivalTime
+  +int burstTime
+  +int priority
+  +int remainingTime
+  +int startTime
+  +int endTime
+  +Process(int, int, int, int)
+  +void Reset()
+  +int GetTurnaroundTime()
+  +int GetWaitingTime()
+  +int GetResponseTime()
+  +bool IsFinished()
+  +void Run(int)
+}
+
+class SelectedProcess {
+  +Process process
+  +int TTL
+}
+
+class JsonArrayWrapper<T> {
+  +T[] array
+}
+
+enum AlgorithmType {
+  FCFS
+  SJF
+  RR
+  PriorityBatch
+  PriorityRR
+}
+
+' ==== Interfaces ====
+interface IAlgorithm {
+  +SelectedProcess SelectNext(List<Process>, int)
+}
+
+' ==== Algorithms ====
+class FCFS
+class SJF
+class RR {
+  +int Quantum
+  +RR(int)
+}
+class PriorityBatch {
+  +int? Quantum
+}
+class PriorityRR {
+  +int Quantum
+  +PriorityRR(int)
+}
+
+' ==== Factory ====
+class AlgorithmFactory {
+  +static IAlgorithm Create(AlgorithmType, int)
+}
+
+' ==== MonoBehaviour Components ====
+class Scheduler {
+  +AlgorithmType algorithm
+  +int quantum
+  +float tickInterval
+  +Process CurrentProcess
+  +int Timer
+  +List<Process> allProcesses
+  +List<Process> readyProcesses
+  +List<Process> finishedProcesses
+  +int CurrentTime
+  +event Action TickEvent
+  +IEnumerator FetchProcesses(string)
+  +void CheckForArrivals()
+  +void TimerInterrupt()
+  +void Tick()
+}
+
+class Measurer {
+  +double CalculateAverageTurnaroundTime()
+  +double CalculateAverageWaitingTime()
+  +double CalculateAverageResponseTime()
+  +double CalculateThroughput()
+  +int GetTotalTime()
+}
+
+class UIVisualizer{
+    +void UpdateUI()
+}
+
+' ==== Relationships ====
+Scheduler --> AlgorithmFactory : uses
+Scheduler --> IAlgorithm : scheduler
+Scheduler --> Process
+Scheduler --> JsonArrayWrapper
+IAlgorithm --> SelectedProcess
+
+Measurer --> Scheduler
+UIVisualizer --> Scheduler
+UIVisualizer --> Measurer
+
+FCFS ..|> IAlgorithm
+SJF ..|> IAlgorithm
+RR ..|> IAlgorithm
+PriorityBatch ..|> IAlgorithm
+PriorityRR ..|> IAlgorithm
+
+@enduml

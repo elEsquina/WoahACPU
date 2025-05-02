@@ -1,0 +1,54 @@
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+
+# User-specific files
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# Unity-generated files
+ExportedObj/
+*.apk
+*.unitypackage
+*.app
+
+# Visual Studio Code
+.vscode/
+
+# Rider
+.idea/
+*.sln.iml
+
+# Crash Reports
+sysinfo.txt
+
+# Auto-generated meta files
+*.pidb.meta
+
+# Build results
+*.apk
+*.aab
+
+# MacOS system files
+.DS_Store
+
+# Windows thumbnail cache
+Thumbs.db
+
+# Backup files
+*.bak

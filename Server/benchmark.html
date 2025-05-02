@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Scheduling Algorithm Benchmarks</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      margin: 0;
+      padding: 2rem;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    th, td {
+      padding: 0.75rem;
+      text-align: center;
+      border: 1px solid #ddd;
+    }
+    th {
+      background-color: #f0f0f0;
+      cursor: pointer;
+    }
+    tr:nth-child(even) {
+      background-color: #fcfcfc;
+    }
+    .charts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-top: 2rem;
+      justify-content: center;
+    }
+    .chart-container {
+      width: 300px;
+    }
+    canvas {
+      width: 100% !important;
+      height: auto !important;
+    }
+    .loading {
+      text-align: center;
+      font-style: italic;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Algorithm Benchmark Results</h1>
+    <div id="table-container" class="loading">Loading data…</div>
+    <div class="charts" id="charts"></div>
+  </div>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    async function loadBenchmarks() {
+      // Fetch JSON from the benchmark endpoint
+      const resp = await fetch('/benchmark', {
+        headers: { 'Accept': 'application/json' }
+      });
+      if (!resp.ok) {
+        document.getElementById('table-container').innerText =
+          'Failed to load benchmark data.';
+        return;
+      }
+      return resp.json();
+    }
+
+    function buildTable(data) {
+      if (!data.length) {
+        return '<p class="loading">No benchmark data available.</p>';
+      }
+      const cols = ['algorithm', ...Object.keys(data[0].metrics)];
+      let html = '<table id="benchmarkTable"><thead><tr>';
+      for (let c of cols) {
+        html += `<th data-col="${c}">${c.replace(/_/g,' ').toUpperCase()}</th>`;
+      }
+      html += '</tr></thead><tbody>';
+      for (let row of data) {
+        html += '<tr>';
+        html += `<td>${row.algorithm}</td>`;
+        for (let m of cols.slice(1)) {
+          html += `<td>${row.metrics[m] ?? ''}</td>`;
+        }
+        html += '</tr>';
+      }
+      html += '</tbody></table>';
+      return html;
+    }
+
+    function enableSorting() {
+      const table = document.getElementById('benchmarkTable');
+      if (!table) return;
+      const getCell = (r,i) => r.children[i].innerText;
+      const comparer = (i,asc) => (a,b) => {
+        const v1 = getCell(a,i), v2 = getCell(b,i);
+        return isNaN(v1)||isNaN(v2) ? v1.localeCompare(v2) : v1-v2;
+      };
+      table.querySelectorAll('th').forEach((th,i) => {
+        let asc = true;
+        th.addEventListener('click', () => {
+          Array.from(table.tBodies[0].rows)
+            .sort(comparer(i,asc))
+            .forEach(r=> table.tBodies[0].appendChild(r));
+          asc = !asc;
+        });
+      });
+    }
+
+    function buildCharts(data) {
+      const metrics = Object.keys(data[0].metrics);
+      const algos  = data.map(d=>d.algorithm);
+      const chartsDiv = document.getElementById('charts');
+      chartsDiv.innerHTML = '';
+      for (let metric of metrics) {
+        const container = document.createElement('div');
+        container.className = 'chart-container';
+        const canvas = document.createElement('canvas');
+        container.appendChild(canvas);
+        chartsDiv.appendChild(container);
+
+        new Chart(canvas.getContext('2d'), {
+          type: 'bar',
+          data: {
+            labels: algos,
+            datasets: [{ label: metric, data: data.map(d=>d.metrics[metric]) }]
+          },
+          options: {
+            scales: {
+              y: { beginAtZero: true, title: { display: true, text: metric } },
+              x: { title: { display: true, text: 'Algorithm' } }
+            },
+            plugins: { legend: { display: false }, title: { display: true, text: metric } }
+          }
+        });
+      }
+    }
+
+    // Main
+    (async () => {
+      const data = await loadBenchmarks();
+      if (data) {
+        document.getElementById('table-container').innerHTML = buildTable(data);
+        enableSorting();
+        buildCharts(data);
+      }
+    })();
+  </script>
+</body>
+</html>

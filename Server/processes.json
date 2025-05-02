@@ -1,0 +1,47 @@
+[
+    {
+        "id": 1,
+        "arrivalTime": 0,
+        "burstTime": 8,
+        "priority": 3,
+        "remainingTime": 8,
+        "startTime": null,
+        "endTime": null
+    },
+    {
+        "id": 2,
+        "arrivalTime": 2,
+        "burstTime": 4,
+        "priority": 1,
+        "remainingTime": 4,
+        "startTime": null,
+        "endTime": null
+    },
+    {
+        "id": 3,
+        "arrivalTime": 4,
+        "burstTime": 9,
+        "priority": 2,
+        "remainingTime": 9,
+        "startTime": null,
+        "endTime": null
+    },
+    {
+        "id": 4,
+        "arrivalTime": 6,
+        "burstTime": 5,
+        "priority": 4,
+        "remainingTime": 5,
+        "startTime": null,
+        "endTime": null
+    },
+    {
+        "id": 5,
+        "arrivalTime": 8,
+        "burstTime": 2,
+        "priority": 1,
+        "remainingTime": 2,
+        "startTime": null,
+        "endTime": null
+    }
+]

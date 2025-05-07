@@ -77,6 +77,9 @@ def generate_processes():
 
     # Optionally sort by arrivalTime so client sees them in time order:
     processes.sort(key=lambda p: p["arrivalTime"])
+    with open('processes.json', 'w') as f:
+        json.dump(processes, f)
+        
     return jsonify(processes)
 
 @app.route('/benchmark', methods=['POST'])
